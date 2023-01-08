@@ -14,7 +14,7 @@ const TodoDetailPage = () => {
   return (
     <div>
       <TodoDetail {...{ id, queryClient }} />
-      <TodoList />
+      <TodoList activeIdSegment={id}/>
     </div>
   );
 };

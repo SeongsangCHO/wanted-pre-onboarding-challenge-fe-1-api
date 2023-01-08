@@ -3,9 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-interface TodoListProps {}
+interface TodoListProps {
+  activeIdSegment?: string;
+}
 
-const TodoList = ({}: TodoListProps) => {
+const TodoList = ({ activeIdSegment }: TodoListProps) => {
   const router = useRouter();
   const { data: todoList, isLoading } = useQuery({
     queryKey: ["getTodos"],
@@ -25,7 +27,9 @@ const TodoList = ({}: TodoListProps) => {
           <div
             key={todo.id}
             onClick={() => handleViewTodoItem(todo.id)}
-            className="cursor-pointer hover:bg-stone-500 p-2 rounded-md transition duration-200 ease-in-out"
+            className={`cursor-pointer hover:bg-stone-500 p-2 rounded-md transition duration-200 ease-in-out
+            ${activeIdSegment === todo.id && "bg-blue-900"}
+            `}
           >
             <div className="flex flex-row justify-between">
               <h1 className="max-w-xs overflow-x-auto text-ellipsis break-all">

@@ -44,7 +44,6 @@ const TodoDetail = ({ id, queryClient }: TodoDetailProps) => {
   };
 
   if (!todoDetail || isLoading || !copyTodo) return <div>loading</div>;
-  console.log(todoDetail);
 
   return (
     <div className="max-h-[400px] min-h-[400px] flex flex-col">
