@@ -1,19 +1,10 @@
 import React from "react";
 import Head from "next/head";
 import TodoList from "@components/Todo/TodoList";
-import todoApis from "@api/todos";
+import Layout from "@components/Layout";
+import CreateTodoForm from "@components/Form/CreateTodoForm";
 
 export default function Page() {
-  const [todo, setTodo] = React.useState<{ title: string; content: string }>({
-    title: "",
-    content: "",
-  });
-  const handleCreateTodo = () => {
-    todoApis.createTodo({
-      title: todo.title,
-      content: todo.content,
-    });
-  };
   return (
     <>
       <Head>
@@ -23,17 +14,7 @@ export default function Page() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <input
-          placeholder="title"
-          value={todo.title}
-          onChange={(e) => setTodo((p) => ({ ...p, title: e.target.value }))}
-        />
-        <input
-          placeholder="content"
-          value={todo.content}
-          onChange={(e) => setTodo((p) => ({ ...p, content: e.target.value }))}
-        />
-        <button onClick={handleCreateTodo}>Create Todo</button>
+        <CreateTodoForm />
         <TodoList />
       </main>
     </>
@@ -41,5 +22,5 @@ export default function Page() {
 }
 
 Page.getLayout = function getLayout(page: React.ReactElement) {
-  return <>{page}</>;
+  return <Layout>{page}</Layout>;
 };

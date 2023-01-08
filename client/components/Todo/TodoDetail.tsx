@@ -1,5 +1,6 @@
 import { TodoItem } from "@api/responseType";
 import todoApis from "@api/todos";
+import UpdateTodoForm from "@components/Form/UpdateTodoForm";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -29,19 +30,6 @@ const TodoDetail = ({ id, queryClient }: TodoDetailProps) => {
     },
   });
 
-  const updateTodoMutation = useMutation({
-    mutationKey: ["updateTodo", id],
-    mutationFn: (id: string) =>
-      todoApis.updateTodo(id, {
-        title: copyTodo.title,
-        content: copyTodo.content,
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["getTodoById", id]);
-      queryClient.invalidateQueries(["getTodos"]);
-      setIsUpdatable(false);
-    },
-  });
   const deleteTodoMutation = useMutation({
     mutationKey: ["deleteTodo", id],
     mutationFn: () => todoApis.deleteTodo(id),
@@ -51,7 +39,6 @@ const TodoDetail = ({ id, queryClient }: TodoDetailProps) => {
     },
   });
 
-  const handleUpdate = () => {};
   const handleDelete = () => {
     deleteTodoMutation.mutate();
   };
@@ -60,37 +47,50 @@ const TodoDetail = ({ id, queryClient }: TodoDetailProps) => {
   console.log(todoDetail);
 
   return (
-    <div>
-      <button
-        onClick={() => {
-          isUpdatable
-            ? updateTodoMutation.mutate(todoDetail.data.id)
-            : setIsUpdatable(true);
-        }}
-      >
-        update
-      </button>
-      <button onClick={() => setIsUpdatable(false)}>update Cancel</button>
-      <button onClick={handleDelete}>delete</button>
-      <h1>Detail</h1>
-      <div>
+    <div className="max-h-[400px] min-h-[400px] flex flex-col">
+      <div className="flex flex-row justify-end gap-2 mb-4">
         {!isUpdatable && (
-          <>
-            <h1>{todoDetail.data.title}</h1>
-            <p>{todoDetail.data.content}</p>
-          </>
+          <button
+            className="p-2 bg-blue-500 rounded-md text-white"
+            onClick={() => {
+              setIsUpdatable(true);
+            }}
+          >
+            Update
+          </button>
         )}
+        <button
+          className="p-2 bg-red-500 rounded-md text-white"
+          onClick={handleDelete}
+        >
+          delete
+        </button>
       </div>
+      {!isUpdatable && (
+        <div className="border-t border-b grow">
+          <div className="flex justify-between border-b items-center">
+            <h1 className="text-2xl break-all">{todoDetail.data.title}</h1>
+            <span>{new Date(todoDetail.data.createdAt).toDateString()}</span>
+          </div>
+          <div className="text-xs flex justify-end mt-1">
+            <span>
+              Updated: {new Date(todoDetail.data.updatedAt).toDateString()}
+            </span>
+          </div>
+          <p className="break-all mt-4">{todoDetail.data.content}</p>
+        </div>
+      )}
+
       {isUpdatable && (
-        <>
-          <input
-            value={copyTodo.title}
-            onChange={(e) =>
-              setCopyTodo((p) => ({ ...p, title: e.target.value }))
-            }
-          />
-          <input value={copyTodo.content} />
-        </>
+        <UpdateTodoForm
+          {...{
+            id,
+            queryClient,
+            copyTodo,
+            setCopyTodo,
+            setIsUpdatable,
+          }}
+        />
       )}
     </div>
   );
