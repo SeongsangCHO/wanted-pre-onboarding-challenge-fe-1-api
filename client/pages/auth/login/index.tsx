@@ -1,4 +1,6 @@
 import React from "react";
+import api from "api/api-instance";
+import { LoginResponse } from "@api/responseType";
 
 interface IndexProps {}
 
@@ -16,8 +18,22 @@ const LoginPage = ({}: IndexProps) => {
     password: "",
   });
 
-  const handleSubmitLoginForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const requestLogin = async (): Promise<LoginResponse> => {
+    return api
+      .post("/users/login", {
+        password: formInputs.password,
+        email: formInputs.email,
+      })
+      .then((res) => res.json());
+  };
+  const handleSubmitLoginForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    try {
+      const { token, message } = await requestLogin();
+      localStorage.setItem("token", token);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
