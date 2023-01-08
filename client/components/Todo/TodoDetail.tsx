@@ -62,7 +62,7 @@ const TodoDetail = ({ id, queryClient }: TodoDetailProps) => {
           className="p-2 bg-red-500 rounded-md text-white"
           onClick={handleDelete}
         >
-          delete
+          Delete
         </button>
       </div>
       {!isUpdatable && (
