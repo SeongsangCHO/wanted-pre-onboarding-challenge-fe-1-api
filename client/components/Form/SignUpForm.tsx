@@ -19,12 +19,10 @@ const SignUpForm = ({}: SignUpFormProps) => {
   });
 
   const requestSignUp = async (): Promise<LoginResponse> => {
-    return api
-      .post("/users/create", {
-        password: formInputs.password,
-        email: formInputs.email,
-      })
-      .then((res) => res.json());
+    return api.post("/users/create", {
+      password: formInputs.password,
+      email: formInputs.email,
+    });
   };
   const handleSubmitSignUpForm = async () => {
     try {

@@ -18,17 +18,16 @@ const LoginForm = ({}: LoginFormProps) => {
   });
 
   const requestLogin = async (): Promise<LoginResponse> => {
-    return api
-      .post("/users/login", {
-        email: formInputs.email,
-        password: formInputs.password,
-      })
-      .then((res) => res.json());
+    return api.post("/users/login", {
+      email: formInputs.email,
+      password: formInputs.password,
+    });
   };
   const handleSubmitLoginForm = async () => {
     try {
       const { token, message } = await requestLogin();
       localStorage.setItem("token", token);
+      api.setToken(token);
       router.replace("/");
     } catch (e) {
       console.error(e);
