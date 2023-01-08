@@ -1,20 +1,21 @@
 import api from "./api-instance";
+import { GetTodoByID, GetTodos } from "./responseType";
 
 class TodoApis {
-  getTodos = () => {
-    return api.getWithToken(`/users/todos`);
+  getTodos = (): Promise<GetTodos> => {
+    return api.getWithToken(`/todos`);
   };
-  getTodoById = (id: string) => {
-    return api.getWithToken(`/users/todos/${id}`);
+  getTodoById = (id: string): Promise<GetTodoByID> => {
+    return api.getWithToken(`/todos/${id}`);
   };
   createTodo = (body: { title: string; content: string }) => {
-    return api.postWithToken(`/users/todos`, body);
+    return api.postWithToken(`/todos`, body);
   };
   updateTodo = (id: string, body: { title: string; content: string }) => {
-    return api.putWithToken(`/users/todos/${id}`, body);
+    return api.putWithToken(`/todos/${id}`, body);
   };
   deleteTodo = (id: string) => {
-    return api.deleteWithToken(`/users/todos/${id}`);
+    return api.deleteWithToken(`/todos/${id}`);
   };
 }
 const todoApis = new TodoApis();
