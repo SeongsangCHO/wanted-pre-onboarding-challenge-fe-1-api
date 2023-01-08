@@ -2,6 +2,8 @@ import React from "react";
 
 interface FormProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  children: React.ReactNode | string;
+  className?: string;
 }
 
 type FormSubmitButton = {
@@ -16,15 +18,20 @@ const FormSubmitButton = ({
   className,
 }: FormSubmitButton) => {
   return (
-    <button type="submit" {...{ disabled, className }}>
+    <button
+      type="submit"
+      {...{ disabled, className }}
+      className={`${className} bg-blue-500 text-white rounded-md p-2 cursor-pointer`}
+    >
       {children}
     </button>
   );
 };
 
-const Form = ({ onSubmit, children }: React.PropsWithChildren<FormProps>) => {
+const Form = ({ onSubmit, children, className }: FormProps) => {
   return (
     <form
+      className={className}
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit(e);
