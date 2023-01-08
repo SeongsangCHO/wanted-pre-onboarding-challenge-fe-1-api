@@ -1,11 +1,11 @@
 import React from "react";
 import Form from "@components/Form/Form";
+import {
+  FormInputPattern,
+  FormRegex,
+} from "@components/Form/form-input-pattern";
 import api from "@api/api-instance";
 import { LoginResponse } from "@api/responseType";
-
-const REGEX = {
-  email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-};
 
 interface LoginFormProps {}
 
@@ -38,24 +38,27 @@ const LoginForm = ({}: LoginFormProps) => {
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: emailInputValue } = e.target;
-    const isEmailValid = REGEX.email.test(emailInputValue);
+
+    const isEmailValid = FormRegex.email.test(emailInputValue);
     setLoginValidation((p) => ({ ...p, email: isEmailValid }));
-    setFormInputs((p) => ({ ...p, email: e.target.value }));
+    setFormInputs((p) => ({ ...p, email: emailInputValue }));
   };
 
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: passwordInputValue } = e.target;
+
     const isPasswordValid = passwordInputValue.length >= 8;
     setLoginValidation((p) => ({ ...p, password: isPasswordValid }));
-    setFormInputs((p) => ({ ...p, password: e.target.value }));
+    setFormInputs((p) => ({ ...p, password: passwordInputValue }));
   };
+
   return (
     <Form onSubmit={handleSubmitLoginForm}>
       <label>
         Id
         <input
           name="email"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          pattern={FormInputPattern.email}
           value={formInputs.email}
           onChange={handleChangeEmail}
         />
