@@ -1,3 +1,4 @@
+import Layout from "@components/Layout";
 import TodoDetail from "@components/Todo/TodoDetail";
 import TodoList from "@components/Todo/TodoList";
 import { useQueryClient } from "@tanstack/react-query";
@@ -12,10 +13,14 @@ const TodoDetailPage = () => {
   if (typeof id !== "string") return <div>404</div>;
   return (
     <div>
-      <TodoDetail {...{ id,queryClient }} />
+      <TodoDetail {...{ id, queryClient }} />
       <TodoList />
     </div>
   );
 };
 
 export default TodoDetailPage;
+
+TodoDetailPage.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout>{page}</Layout>;
+};

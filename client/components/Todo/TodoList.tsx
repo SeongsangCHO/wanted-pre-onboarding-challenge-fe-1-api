@@ -19,11 +19,20 @@ const TodoList = ({}: TodoListProps) => {
 
   if (isLoading) return <div>loading</div>;
   return (
-    <div>
+    <div className="flex flex-col gap-4 mt-2 max-h-96 overflow-y-scroll p-2">
       {todoList.data.map((todo) => {
         return (
-          <div key={todo.id} onClick={() => handleViewTodoItem(todo.id)}>
-            <h1>{todo.title}</h1>
+          <div
+            key={todo.id}
+            onClick={() => handleViewTodoItem(todo.id)}
+            className="cursor-pointer hover:bg-stone-500 p-2 rounded-md transition duration-200 ease-in-out"
+          >
+            <div className="flex flex-row justify-between">
+              <h1 className="max-w-xs overflow-x-auto text-ellipsis break-all">
+                {todo.title}
+              </h1>
+              <span>{new Date(todo.createdAt).toDateString()}</span>
+            </div>
           </div>
         );
       })}
