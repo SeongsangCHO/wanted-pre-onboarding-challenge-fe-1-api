@@ -10,10 +10,6 @@ import { LoginResponse } from "@api/responseType";
 interface LoginFormProps {}
 
 const LoginForm = ({}: LoginFormProps) => {
-  const [loginValidation, setLoginValidation] = React.useState({
-    email: false,
-    password: false,
-  });
   const [formInputs, setFormInputs] = React.useState({
     email: "",
     password: "",
@@ -38,19 +34,19 @@ const LoginForm = ({}: LoginFormProps) => {
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: emailInputValue } = e.target;
-
-    const isEmailValid = FormRegex.email.test(emailInputValue);
-    setLoginValidation((p) => ({ ...p, email: isEmailValid }));
     setFormInputs((p) => ({ ...p, email: emailInputValue }));
   };
 
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: passwordInputValue } = e.target;
-
-    const isPasswordValid = passwordInputValue.length >= 8;
-    setLoginValidation((p) => ({ ...p, password: isPasswordValid }));
     setFormInputs((p) => ({ ...p, password: passwordInputValue }));
   };
+
+  const isLoginFormValid = React.useMemo(() => {
+    return (
+      FormRegex.email.test(formInputs.email) && formInputs.password.length >= 8
+    );
+  }, [formInputs]);
 
   return (
     <Form onSubmit={handleSubmitLoginForm}>
@@ -72,11 +68,7 @@ const LoginForm = ({}: LoginFormProps) => {
           minLength={8}
         />
       </label>
-      <Form.SubmitButton
-        disabled={!(loginValidation.email && loginValidation.password)}
-      >
-        Login
-      </Form.SubmitButton>
+      <Form.SubmitButton disabled={!isLoginFormValid}>Login</Form.SubmitButton>
     </Form>
   );
 };
