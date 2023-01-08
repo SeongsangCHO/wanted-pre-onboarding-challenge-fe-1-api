@@ -22,7 +22,7 @@ const TodoList = ({ activeIdSegment }: TodoListProps) => {
   if (isLoading) return <div>loading</div>;
   return (
     <div className="flex flex-col gap-4 mt-2 max-h-96 overflow-y-scroll p-2">
-      {todoList.data.map((todo) => {
+      {todoList.data?.map((todo) => {
         return (
           <div
             key={todo.id}

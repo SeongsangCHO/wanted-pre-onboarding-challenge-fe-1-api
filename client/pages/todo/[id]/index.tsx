@@ -10,11 +10,11 @@ const TodoDetailPage = () => {
   const { id } = router.query;
   const queryClient = useQueryClient();
 
-  if (typeof id !== "string") return <div>404</div>;
+  if (typeof id !== "string") return <></>;
   return (
     <div>
       <TodoDetail {...{ id, queryClient }} />
-      <TodoList activeIdSegment={id}/>
+      <TodoList activeIdSegment={id} />
     </div>
   );
 };
