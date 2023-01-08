@@ -39,6 +39,25 @@ class Fetch {
       body: JSON.stringify(body),
     }).then((res) => res.json());
   }
+  deleteWithToken(url: string) {
+    return fetch(this.baseUrl + url, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
+  }
+  putWithToken(url: string, body: any) {
+    return fetch(this.baseUrl + url, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }).then((res) => res.json());
+  }
 }
 const api = new Fetch();
 export default api;

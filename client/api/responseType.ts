@@ -12,7 +12,7 @@ export interface DeleteTodo {
   data: null;
 }
 
-export interface Data {
+export interface TodoItem {
   title: string;
   content: string;
   id: string;
@@ -21,17 +21,17 @@ export interface Data {
 }
 
 export interface UpdateTodo {
-  data: Data;
+  data: TodoItem;
 }
 
 export interface CreateTodo {
-  data: Data;
+  data: TodoItem;
 }
 
 export interface GetTodoByID {
-  data: Data;
+  data: TodoItem;
 }
 
 export interface GetTodos {
-  data: Data[];
+  data: TodoItem[];
 }
