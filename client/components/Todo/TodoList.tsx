@@ -1,4 +1,4 @@
-import {TodoMutations, TodoQueries} from "@components/queries/TodoQueries";
+import { TodoMutations, TodoQueries } from "@api/queries/TodoQueries";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React from "react";
