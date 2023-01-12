@@ -1,7 +1,7 @@
 import { TodoItem } from "@api/responseType";
-import todoApis from "@api/todos";
 import UpdateTodoForm from "@components/Form/UpdateTodoForm";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { TodoMutations, TodoQueries } from "@components/queries/TodoQueries";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -22,25 +22,22 @@ const TodoDetail = ({ id, queryClient }: TodoDetailProps) => {
   const [copyTodo, setCopyTodo] = React.useState<TodoItem>(INITIAL_TODO);
   const [isUpdatable, setIsUpdatable] = React.useState<boolean>(false);
 
-  const { data: todoDetail, isLoading } = useQuery({
-    queryKey: ["getTodoById", id],
-    queryFn: () => todoApis.getTodoById(id),
-    onSuccess(res) {
-      setCopyTodo(res.data);
+  const { data: todoDetail, isLoading } = TodoQueries.getTodoById({
+    id,
+    onSuccessCallback: (res) => {
+      setCopyTodo(res);
     },
   });
 
-  const deleteTodoMutation = useMutation({
-    mutationKey: ["deleteTodo", id],
-    mutationFn: () => todoApis.deleteTodo(id),
-    onSuccess: () => {
+  const deleteTodoMutation = TodoMutations.deleteTodoById({
+    onSuccessCallback: () => {
       queryClient.invalidateQueries(["getTodos"]);
       router.push("/");
     },
   });
 
   const handleDelete = () => {
-    deleteTodoMutation.mutate();
+    deleteTodoMutation.mutate(id);
   };
 
   if (!todoDetail || isLoading || !copyTodo) return <div>loading</div>;

@@ -1,5 +1,5 @@
-import todoApis from "@api/todos";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {TodoMutations, TodoQueries} from "@components/queries/TodoQueries";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -10,15 +10,10 @@ interface TodoListProps {
 const TodoList = ({ activeIdSegment }: TodoListProps) => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { data: todoList, isLoading } = useQuery({
-    queryKey: ["getTodos"],
-    queryFn: () => todoApis.getTodos(),
-    initialData: { data: [] },
-  });
+  const { data: todoList, isLoading } = TodoQueries.getTodos();
 
-  const deleteTodoMutation = useMutation({
-    mutationFn: (id: string) => todoApis.deleteTodo(id),
-    onSuccess: () => {
+  const deleteTodoMutation = TodoMutations.deleteTodoById({
+    onSuccessCallback: () => {
       queryClient.invalidateQueries(["getTodos"]);
     },
   });
