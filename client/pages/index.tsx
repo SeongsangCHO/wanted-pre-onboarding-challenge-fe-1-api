@@ -3,6 +3,7 @@ import Head from "next/head";
 import TodoList from "@components/Todo/TodoList";
 import Layout from "@components/Layout";
 import CreateTodoForm from "@components/Form/CreateTodoForm";
+import AuthHoc from "@components/AuthHOC";
 
 export default function Page() {
   return (
@@ -22,5 +23,9 @@ export default function Page() {
 }
 
 Page.getLayout = function getLayout(page: React.ReactElement) {
-  return <Layout>{page}</Layout>;
+  return (
+    <AuthHoc>
+      <Layout>{page}</Layout>
+    </AuthHoc>
+  );
 };

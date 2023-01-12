@@ -1,3 +1,4 @@
+import AuthHoc from "@components/AuthHOC";
 import Layout from "@components/Layout";
 import TodoDetail from "@components/Todo/TodoDetail";
 import TodoList from "@components/Todo/TodoList";
@@ -22,5 +23,9 @@ const TodoDetailPage = () => {
 export default TodoDetailPage;
 
 TodoDetailPage.getLayout = function getLayout(page: React.ReactElement) {
-  return <Layout>{page}</Layout>;
+  return (
+    <AuthHoc>
+      <Layout>{page}</Layout>
+    </AuthHoc>
+  );
 };
