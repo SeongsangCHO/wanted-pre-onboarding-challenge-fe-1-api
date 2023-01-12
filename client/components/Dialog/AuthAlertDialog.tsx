@@ -15,9 +15,13 @@ const AuthAlertDialog = () => {
   }, [counter]);
 
   return (
+    // dimmed background
     <div className="z-50 w-screen h-screen bg-opacity-40 bg-white fixed top-0 left-0">
+      {/* content Wrapper */}
       <div className="w-full h-full relative">
+        {/* content bg*/}
         <div className="text-black bg-white absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 p-4 rounded-md shadow-lg">
+          {/* content */}
           <div className="flex flex-col">
             <span className="font-semibold text-lg">권한이 없습니다.</span>
             <span>{counter}초뒤 자동으로 이동됩니다.</span>

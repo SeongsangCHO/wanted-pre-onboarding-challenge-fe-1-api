@@ -17,8 +17,8 @@ type AppPropsWithLayout = AppProps & {
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (e) => {
-      console.error(e);
-      window.location.replace("/auth/login");
+      const error = e as unknown as Error;
+      console.error(error.message);
     },
   }),
 });
