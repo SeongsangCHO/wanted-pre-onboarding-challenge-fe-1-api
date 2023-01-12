@@ -4,11 +4,6 @@ import React from "react";
 
 const GNB = () => {
   const router = useRouter();
-  const token = typeof window !== "undefined" && localStorage.getItem("token");
-
-  React.useEffect(() => {
-    if (!token) router.replace("/auth/login");
-  }, []);
 
   return (
     <div className="flex justify-between items-center">

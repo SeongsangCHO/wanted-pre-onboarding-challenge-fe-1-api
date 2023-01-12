@@ -7,14 +7,13 @@ interface AuthHocProps {
 
 const AuthHoc = ({ children }: AuthHocProps) => {
   const AuthCheck = () => {
-    const loginToken =
-      typeof window !== "undefined" && localStorage.getItem("token");
-    const [hasLoginToken, setHasLoginToken] = React.useState(false);
+    const [hasLoginToken, setHasLoginToken] = React.useState(true);
     // avoid hydration error
     React.useEffect(() => {
+      const loginToken =
+        typeof window !== "undefined" && localStorage.getItem("token");
       setHasLoginToken(!!loginToken);
     }, []);
-    if (!hasLoginToken) return <></>;
     // rerender after mounted checking has login token
     return (
       <>
